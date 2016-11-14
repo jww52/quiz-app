@@ -1,0 +1,36 @@
+* {
+	box-sizing: border-box;
+}
+
+.box {
+	margin: 20px 35px 20px 35px;
+	border: 1px solid black;
+	text-align:center;
+	padding-bottom: 6px;
+	}
+
+.subheader {
+	font-style: italic;
+}
+
+.question {
+	margin: 4px 35px 0px 35px;
+	border: 1px solid grey;
+	text-align: center;
+	padding: 2px;
+}
+
+.answerList {
+	text-align:left;
+}
+
+.correct_counter {
+	margin-left: 35px;
+	margin-right: 35px;
+	text-align: center;
+	display: fixed;
+}
+
+.numCorrect {
+	color: red;
+}
