@@ -13,7 +13,7 @@
 	font-style: italic;
 }
 
-.question {
+.question > div {
 	margin: 4px 35px 0px 35px;
 	border: 1px solid grey;
 	text-align: center;
@@ -33,4 +33,27 @@
 
 .numCorrect {
 	color: red;
+}
+
+.question {
+  margin-top: 25px;
+  margin-left: 20px;
+  margin-right: 20px;
+  
+}
+
+ul li {
+    list-style-type: none;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
+}
+
+.next-question {
+  margin-left: 55px;
+  margin-right: auto;
 }
