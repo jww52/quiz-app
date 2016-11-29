@@ -45,45 +45,63 @@ var quiz = {
 };
 
 $(document).ready(function() {
-    $(".question, .next-question").hide(); 
-  
-function generateQuestion() {
-        $("div.question").prepend(quiz.questions[quiz.currentQuestion].question);
-        var answerList = quiz.questions[quiz.currentQuestion].answers;
-        console.log(answerList);
-        for (var i = 0; i < answerList.length; i++) {
-            $("div.question").append("<ul> <li>" + answerList[i] + "</li>");
+    $(".question, .next-question, .final-page").hide();
+
+    function lastQuestion() {
+        $("div.question").hide();
+        $(".final-page").show();
+        $(".next-question").text("Play Again!");
+    }
+
+    function generateQuestion() {
+        if (quiz.currentQuestion === quiz.questions.length) {
+            lastQuestion();
+        } else {
+            $("div.question").prepend(quiz.questions[quiz.currentQuestion].question);
+            var answerList = quiz.questions[quiz.currentQuestion].answers;
+            console.log(answerList);
+            for (var i = 0; i < answerList.length; i++) {
+                $("div.question").append("<ul> <li>" + answerList[i] + "</li>");
+            }
         }
-        
- }
-  
- //jquery event delegation
- function questionCheck() {
+    }
+
+    //jquery event delegation
+    function questionCheck() {
         $(".question").on('click', 'li', function(e) {
             e.preventDefault();
             if ($(this).text() === quiz.questions[quiz.currentQuestion].correct) {
                 $(".question").text("Yes! The correct answer was " + quiz.questions[quiz.currentQuestion].correct + "!");
-                quiz.correctCount +=1;
+                quiz.correctCount += 1;
                 console.log(quiz.correctCount);
                 $(".numCorrect").text(quiz.correctCount);
                 $(".next-question").css("margin-top", "20px");
             } else {
                 $(".question").text("Sorry! The correct answer was " + quiz.questions[quiz.currentQuestion].correct + "!");
-              $(".next-question").css("margin-top", "20px");
+                $(".next-question").css("margin-top", "20px");
             }
         });
-   }
-  
-  function nextQuestion() {
-      $(".next-question").on('click', function(e) {
-      e.preventDefault();
-      quiz.currentQuestion += 1;
-      $("div.question").empty();
-      generateQuestion();
-        console.log(quiz.currentQuestion);
-    });
-  }
-  
+    }
+
+    function nextQuestion() {
+        $(".next-question").on('click', function(e) {
+            e.preventDefault();
+            if ($(".next-question").text() === "Play Again!") {
+                $(".final-page").hide();
+                $(".next-question").text("Next Question");
+                quiz.currentQuestion = 0;
+                quiz.correctCount = 0;
+                $(".numCorrect").text(quiz.correctCount);
+                $("div.question, .next-question").show();
+                generateQuestion();
+            } else {
+                quiz.currentQuestion += 1;
+                $("div.question").empty();
+                generateQuestion();
+            }
+        });
+    }
+
     $(".start-quiz").click((function() {
         $(".box").hide();
         $("div.question, .next-question").show();
@@ -91,15 +109,4 @@ function generateQuestion() {
         generateQuestion();
         questionCheck();
     }));
-  
-//   function nextQuestion() {
-//       $(".next-question").on('click', function(e) {
-//       e.preventDefault();
-//       quiz.currentQuestion += 1;
-//       $("div.question").empty();
-//       generateQuestion();
-//       questionCheck();
-//     });
-//   }
-
 });
